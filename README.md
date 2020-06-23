@@ -5,22 +5,22 @@ I've built this demo over the first couple of weeks during my onboarding phase a
   * Fully TLS encrypted Consul cluster (3 nodes by default, configurable).
   * Fully TLS encrypted Vault cluster with Consul as storage backend (2 nodes by default, configurable).
   * Fully TLS encrypted Nomad cluster:
-    ** Nomad cluster is built by reading cluster peers from Consul.
-    ** Consul configured for service registration and discovery.
-    ** Vault configured for secrests lookup.
-    ** Nomad workers read cluster information from Consul.
+    - Nomad cluster is built by reading cluster peers from Consul.
+    - Consul configured for service registration and discovery.
+    - Vault configured for secrests lookup.
+    - Nomad workers read cluster information from Consul.
   * A bastion host that has CLIs configured for Vault, Nomad and consul.
   * The VMs are based on a custom build fedora 33 installation. Packer is used to build the libvirt image.
     The actual installation and configuration happens via a kickstart file.
   * Terraform is being used to create the VMs based on the packer output. All VMs are configured via cloud init. The binaries 
     of all the products are installed as part of the packer kickstart.
   * The demo shows the integration between Consul, Vault and Nomad.
-      ** It deploys a Postgres database with data included on Nomad.
-      ** It deploys a web service (default: two instances) that connects to that database by looking up the service via Consul 
+      - It deploys a Postgres database with data included on Nomad.
+      - It deploys a web service (default: two instances) that connects to that database by looking up the service via Consul 
          on Nomad.
-      ** It deploys a HAproxy load balancer that looks up the web services and configures them for load balancing. Lookup happens 
+      - It deploys a HAproxy load balancer that looks up the web services and configures them for load balancing. Lookup happens 
          again via Consul DNS.
-      ** The web service gets access to the database by requesting credentials from Vault via the database secret engine and 
+      - The web service gets access to the database by requesting credentials from Vault via the database secret engine and 
          according policies.
 
 ## Remarks
