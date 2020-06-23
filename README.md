@@ -34,13 +34,6 @@ I've built this demo over the first couple of weeks during my onboarding phase a
     desktop.
   * Demo uses Docker as runtime with a custom Docker network/bridge that gets created as part of cloudinit. The bridge is called "nomad". The demo uses that network to attach the constainer to. Reason is that the default bridge doesn't use the DNS from the underlying host.
   
-## ToDos
-  * Remove my personal public key from all VMs and make the bastion host the single point to access the nodes.
-  * Move to Nomad Enterprise.
-  * Include Terraform Enterprise.
-  * Include Kubernetes and integrate it with Consul and Vault.
-  * Add config and demo for Consul Service Mesh.
-  
 ## Initialization of Vault and Nomad
 On the bastion host:
 
@@ -124,3 +117,9 @@ mkaesz@bastion$ curl 192.168.122.27:8080/names
 <html>
 ```  
   
+## ToDos
+  * Remove my personal public key from all VMs and make the bastion host the single point to access the nodes.
+  * Move to Nomad Enterprise.
+  * Include Terraform Enterprise.
+  * Include Kubernetes and integrate it with Consul and Vault.
+  * Add config and demo for Consul Service Mesh.
