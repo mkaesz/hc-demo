@@ -1,0 +1,57 @@
+{
+  "builders": [
+    {
+      "accelerator": "kvm",
+      "boot_command": [
+        "<tab> console=ttyS0,115200n8 inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/fedora-base-image.ks rd.live.check=0<enter><wait>"
+      ],
+      "communicator": "none",
+      "disk_size": "15000",
+      "format": "qcow2",
+      "headless": "true",
+      "http_directory": "http",
+      "http_port_max": "10089",
+      "http_port_min": "10082",
+      "iso_checksum": "sha256:7f4afd2a26c718f9f15e4bbfd9c2e8849f81036d2a82a4e81fa4a313a833da9c",
+      "iso_url": "http://192.168.0.171:8088/workspace/images/Fedora-Server-netinst-x86_64-32-1.6.iso",
+      "output_directory": "output",
+      "qemu_binary": "qemu-system-x86_64",
+      "qemuargs": [
+        [
+          "-m",
+          "4000"
+        ],
+        [
+          "-cpu",
+          "host"
+        ],
+        [
+          "-chardev",
+          "tty,id=pts,path={{user `serial`}}"
+        ],
+        [
+          "-device",
+          "isa-serial,chardev=pts"
+        ],
+        [
+          "-device",
+          "virtio-net,netdev=user.0"
+        ]
+      ],
+      "type": "qemu",
+      "vm_name": "fedora32-kvm-hc-products-cloudinit.qcow2"
+    }
+  ],
+  "post-processors": [
+    {
+      "inline": [
+        "mv output/fedora32-kvm-hc-products-cloudinit.qcow2 /home/mkaesz/workspace/images",
+        "rm -rf output/"
+      ],
+      "type": "shell-local"
+    }
+  ],
+  "variables": {
+    "serial": ""
+  }
+}
