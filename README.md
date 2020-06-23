@@ -1,7 +1,7 @@
 # hc-demo
 I've built this demo over the first couple of weeks during my onboarding phase at HashiCorp.
 
-## It includes:
+## It includes
   * Fully TLS encrypted Consul cluster (3 nodes by default, configurable).
   * Fully TLS encrypted Vault cluster with Consul as storage backend (2 nodes by default, configurable).
   * Fully TLS encrypted Nomad cluster:
@@ -23,7 +23,7 @@ I've built this demo over the first couple of weeks during my onboarding phase a
       ** The web service gets access to the database by requesting credentials from Vault via the database secret engine and 
          according policies.
 
-## Remarks:
+## Remarks
   * I used libvirt, qemu and KVM.
   * I had a DNS server running outside of this demo that all VMs get registered with as part of their provisioning. 
     The DNS is CoreDNS with a ETCD backend.
@@ -33,7 +33,7 @@ I've built this demo over the first couple of weeks during my onboarding phase a
   * Enterprise binaries are included. The HashiCorp licenses for Vault and Consul are not included in this repo or the VMs. They were located on my 
     desktop.
   
-## ToDos:
+## ToDos
   * Remove my personal public key from all VMs and make the bastion host the single point to access the nodes.
   * Move to Nomad Enterprise.
   * Include Terraform Enterprise.
