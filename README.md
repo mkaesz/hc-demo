@@ -1,4 +1,4 @@
-# HashiCorp Onboarding Phase
+# HashiCorp Onboarding Phase Demo
 I've built this demo over the first couple of weeks during my onboarding phase at HashiCorp.
 
 ## It includes
