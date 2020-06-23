@@ -32,6 +32,90 @@ I've built this demo over the first couple of weeks during my onboarding phase a
   * My public key is configured on all VMs. I could therefore ssh into all VMs.
   * Enterprise binaries are included. The HashiCorp licenses for Vault and Consul are not included in this repo or the VMs. They were located on my 
     desktop.
+  * Demo uses Docker as runtime with a custom Docker network/bridge that gets created as part of cloudinit. The bridge is called "nomad". The demo uses that network to attach the constainer to. Reason is that the default bridge doesn't use the DNS from the underlying host.
+  
+## Initialization of Vault and Nomad
+On the bastion host:
+
+```
+cd ~
+
+# Initialize nomad
+bash nomad-bootstrap.sh
+
+#Initialize vault 
+bash vault-bootstrap.sh
+```
+
+## Run the demo
+On the bastion host:
+
+``` 
+cd ~/demo/vault-nomad-demo
+
+# Create the database
+nomad run postgres-nomad-demo.nomad
+
+# Enable the database engine
+vault secrets enable database
+
+# Configure the connection
+vault write database/config/postgresql @connection.json
+
+# Configure the command to be executed when requesting credentials
+vault write database/roles/accessdb db_name=postgresql \
+	creation_statements=@accessdb.sql default_ttl=1h max_ttl=24h
+
+# Test everything manually
+vault read database/creds/accessdb
+
+# Write the policy that nomad uses to request credentials
+vault policy write access-tables access-tables-policy.hcl
+
+# Run the web service
+nomad run nomad-vault-demo.nomad
+
+# Run the load balancer
+nomad run haproxy.nomad
+
+# Get the endpoint of the load balancer
+nomad status haproxy
+
+# Get the allocation ID from the last entry in the alloc table
+nomad alloc status <ID>
+
+# curl the IP with the ending 8080
+curl <IP>:8008/names
+
+You should see the following:
+
+mkaesz@bastion$ curl 192.168.122.27:8080/names
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1> Welcome! </h1>
+<h2> If everything worked correctly, you should be able to see a list of names below </h2>
+
+<hr>
+
+
+<h4> John Doe </h4>
+
+<h4> Peter Parker </h4>
+
+<h4> Clifford Roosevelt </h4>
+
+<h4> Bruce Wayne </h4>
+
+<h4> Steven Clark </h4>
+
+<h4> Mary Jane </h4>
+
+
+</body>
+<html>
+```  
   
 ## ToDos
   * Remove my personal public key from all VMs and make the bastion host the single point to access the nodes.
@@ -39,5 +123,3 @@ I've built this demo over the first couple of weeks during my onboarding phase a
   * Include Terraform Enterprise.
   * Include Kubernetes and integrate it with Consul and Vault.
   * Add config and demo for Consul Service Mesh.
-  
-    
