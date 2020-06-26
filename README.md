@@ -5,10 +5,10 @@ I've built this demo over the first couple of weeks during my onboarding phase a
   * Fully TLS encrypted Consul cluster (3 nodes by default, configurable).
   * Fully TLS encrypted Vault cluster with Consul as storage backend (2 nodes by default, configurable).
   * Fully TLS encrypted Nomad cluster:
-    - Nomad cluster is built by reading cluster peers from Consul.
+    - Nomad cluster is built by reading cluster peers from Consul (3 nodes by default, configurable).
     - Consul configured for service registration and discovery.
     - Vault configured for secrests lookup.
-    - Nomad workers read cluster information from Consul.
+    - Nomad workers read cluster information from Consul (2 nodes by default, configurable).
   * A bastion host that has CLIs configured for Vault, Nomad and consul.
   * The VMs are based on a custom build fedora 33 installation. Packer is used to build the libvirt image.
     The actual installation and configuration happens via a kickstart file.
